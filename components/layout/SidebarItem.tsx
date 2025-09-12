@@ -50,7 +50,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
           items-center
           gap-2
           rounded-full
-          px-1 py-0.5
+          px-1.5 py-0.5
           hover:bg-slate-500
           hover:bg-opacity-10
           cursor-pointer
