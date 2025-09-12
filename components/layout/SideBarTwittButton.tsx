@@ -1,11 +1,16 @@
-import FeatherIcon from "@/assets/FeatherIcon";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useCallback } from "react";
+import FeatherIcon from "../../assets/FeatherIcon";
+import useLoginModal from "@/hooks/useLoginModal";
 
 const SideBarTwittButton = () => {
   const router = useRouter();
+  const loginModal = useLoginModal();
+  const handleLogin = useCallback(() => {
+    loginModal.onOpen();
+  }, []);
   return (
-    <div onClick={() => router.push("/")}>
+    <div onClick={handleLogin}>
       <div
         className="
     
