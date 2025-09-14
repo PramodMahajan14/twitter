@@ -16,8 +16,8 @@ const SideBarTwittButton = () => {
     
     lg:hidden
     rounded-full
-    p-2
-    h-14 w-14 flex items-center bg-sky-500 hover:bg-opacity-80 transition cursor-pointer
+    w-12 h-12
+     flex items-center justify-center bg-sky-500 hover:bg-opacity-80 transition cursor-pointer
     "
       >
         <FeatherIcon size={24} color="white" />
