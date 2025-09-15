@@ -26,6 +26,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   const route = useRouter();
   const loginModal = useLoginModal();
   const { data: curretUser } = useCurrentUser();
+  console.log(curretUser);
   const handleOnClick = useCallback(() => {
     if (onClick) {
       return onClick();

@@ -1,32 +1,33 @@
 import useLoginModal from "@/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
 import { useCallback, useState } from "react";
 import Input from "../Input";
+import Modal from "../Modal";
 import { signIn } from "next-auth/react";
 import axios from "axios";
-import Modal from "../Modal";
-import useRegisterModal from "@/hooks/useRegisterModal";
-import { register } from "module";
 import { toast } from "react-hot-toast";
 
-const RegisterMdal = () => {
+const RegisterModal = () => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+
   const [name, setName] = useState<string>("");
-  const [username, setUsername] = useState<string>();
+  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onToggle = useCallback(() => {
-    if (isLoading) {
-      return;
-    }
+    if (isLoading) return;
+
     registerModal.onClose();
     loginModal.onOpen();
   }, [isLoading, registerModal, loginModal]);
+
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+
       await axios.post("/api/register", {
         email,
         password,
@@ -35,19 +36,21 @@ const RegisterMdal = () => {
       });
 
       toast.success("Account created");
-      signIn("credentials", {
+
+      await signIn("credentials", {
         email,
         password,
+        redirect: false, // Optional: avoids auto navigation
       });
 
       registerModal.onClose();
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal]);
+  }, [email, password, username, name, registerModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -91,11 +94,12 @@ const RegisterMdal = () => {
       </p>
     </div>
   );
+
   return (
     <Modal
       isOpen={registerModal.isOpen}
-      title="Create a Account"
-      actionLabel="Sign-Up"
+      title="Create an Account"
+      actionLabel="Sign Up"
       body={bodyContent}
       footer={footerContent}
       onClose={registerModal.onClose}
@@ -105,4 +109,4 @@ const RegisterMdal = () => {
   );
 };
 
-export default RegisterMdal;
+export default RegisterModal;

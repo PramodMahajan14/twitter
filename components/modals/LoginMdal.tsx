@@ -21,16 +21,25 @@ const LoginMdal = () => {
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
 
-      signIn("credentials", { email, password });
-      toast.success("Signed in");
-      loginModal.onClose();
+      if (result?.error) {
+        toast.error(result.error);
+      } else {
+        toast.success("Signed in");
+        loginModal.onClose();
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Login error:", error);
+      toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal]);
+  }, [email, password, loginModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

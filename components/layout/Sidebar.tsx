@@ -10,6 +10,7 @@ import SideBarTwittButton from "./SideBarTwittButton";
 
 const Sidebar = () => {
   const { data: currentUser } = useCurrentUser();
+  console.log(currentUser);
   const items = [
     {
       label: "Home",
@@ -43,7 +44,7 @@ const Sidebar = () => {
             />
           ))}
 
-          {currentUser && (
+          {!currentUser && (
             <SidebarItem
               label="Logout"
               href="/"
